@@ -43,7 +43,7 @@ def enigme_pere_fouras(fichier="data/enigmesPF.json"):
     
     print("Le Pere Fouras dit :")
     print(question)
-    print(" ")
+    print(" faite attention aux accents et a la ponctuation !")
     
     nombre_tentatives = 3
     
