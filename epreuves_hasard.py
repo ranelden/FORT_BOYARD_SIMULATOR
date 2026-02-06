@@ -11,11 +11,11 @@ def bonneteau():
     
     while essais_restants > 0:
         print(f"Il vous reste {essais_restants} essai(s).")
-        choix = input("Sous quel bonneteau se cache la clé ? (A, B ou C) : ").upper().strip()
+        choix = input("Sous quel bonneteau se cache la clé ? (A, B ou C) : ")
         
         while choix not in bonneteaux:
             print("Choix invalide ! Veuillez choisir A, B ou C.")
-            choix = input("Sous quel bonneteau se cache la clé ? (A, B ou C) : ").upper().strip()
+            choix = input("Sous quel bonneteau se cache la clé ? (A, B ou C) : ")
         
         if choix == bonneteau_avec_cle:
             print("Félicitations ! Vous avez trouvé la clé !\n")
