@@ -16,11 +16,9 @@ def afficher_equipe(equipe):
     print("="*70)
     for i, joueur in enumerate(equipe, 1):
         role = "Leader" if joueur['leader'] else "Membre"
-        print(f"{i}. {joueur['nom']} ({joueur['profession']}) - {role}")
+        print(f"{i}. {joueur['nom']} - {role}")
         print(f"   Cles gagnees : {joueur['cles_gagnees']}")
     print("="*70 + "\n")
-
-
 
 
 def epreuve_math():
