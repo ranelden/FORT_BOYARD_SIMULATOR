@@ -3,9 +3,9 @@ from pathlib import Path
 from fonctions_utiles import introduction, composer_equipe, choisir_joueur, menu_epreuves
 from epreuve_finale import salle_de_tresor
 from enigme_pere_fouras import enigme_pere_fouras
-#from epreuves_mathematiques import epreuve_math
+from epreuves_mathematiques import epreuve_math
 #from epreuves_logiques import epreuve_logique
-#from epreuves_hasard import epreuve_hasard
+from epreuves_hasard import epreuve_hasard
 """fait pas cyril dabernard"""
 
 RACINE = Path(__file__).resolve().parent
@@ -20,16 +20,7 @@ def afficher_equipe(equipe):
         print(f"   Cles gagnees : {joueur['cles_gagnees']}")
     print("="*70 + "\n")
 
-
-def epreuve_math():
-    pass
-
-
 def epreuve_logique():
-    pass
-
-
-def epreuve_hasard():
     pass
 
 
