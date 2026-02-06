@@ -37,8 +37,6 @@ def composer_equipe(): # erreur avec leader
                 print("Erreur : L'equipe doit comporter entre 1 et 3 joueurs.")
         except ValueError:
             print("Erreur : Veuillez entrer un nombre valide.")
-    
-    print()
 
     has_leader = False
     for i in range(nb_joueurs):
@@ -46,13 +44,19 @@ def composer_equipe(): # erreur avec leader
         nom = input("Nom du joueur : ").strip()
         profession = input("Profession : ").strip()
 
+        if i == nb_joueurs - 1 and not has_leader:
+            print("Le dernier joueur doit etre le leader de l'equipe.")
+            input("Appuyez sur Entree pour continuer...")
+            est_leader = True
+            has_leader = True
         
         if not has_leader:
             leader_reponse = input("Est-ce le leader de l'equipe ? (oui/non) : ").strip().lower()
-            est_leader = leader_reponse == "oui"
-            has_leader = True
-        else:
-            est_leader = False
+            if leader_reponse == "oui":
+                has_leader = True
+                est_leader = True
+            else:
+                est_leader = False
         
         joueur = {
             'nom': nom,
