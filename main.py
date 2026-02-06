@@ -1,5 +1,11 @@
 import random
+from pathlib import Path
+from epreuve_finale import salle_de_tresor
 from enigme_pere_fouras import enigme_pere_fouras
+#from epreuves_mathematiques import epreuve_math
+#from epreuves_logiques import epreuve_logique
+#from epreuves_hasard import epreuve_hasard
+"""fait pas cyril dabernard"""
 
 
 def introduction():
@@ -33,14 +39,18 @@ def composer_equipe(): # erreur avec leader
             print("Erreur : Veuillez entrer un nombre valide.")
     
     print()
+
+    has_leader = False
     for i in range(nb_joueurs):
         print(f"--- Joueur {i + 1} ---")
         nom = input("Nom du joueur : ").strip()
         profession = input("Profession : ").strip()
+
         
-        if i == 0:
+        if not has_leader:
             leader_reponse = input("Est-ce le leader de l'equipe ? (oui/non) : ").strip().lower()
             est_leader = leader_reponse == "oui"
+            has_leader = True
         else:
             est_leader = False
         
