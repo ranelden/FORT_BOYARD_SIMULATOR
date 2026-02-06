@@ -1,5 +1,6 @@
 import random
 from pathlib import Path
+from fonctions_utiles import introduction, composer_equipe, choisir_joueur, menu_epreuves
 from epreuve_finale import salle_de_tresor
 from enigme_pere_fouras import enigme_pere_fouras
 #from epreuves_mathematiques import epreuve_math
@@ -7,72 +8,7 @@ from enigme_pere_fouras import enigme_pere_fouras
 #from epreuves_hasard import epreuve_hasard
 """fait pas cyril dabernard"""
 
-
-def introduction():
-    print("\n" + "="*70)
-    print(" " * 20 + "BIENVENUE A FORT BOYARD")
-    print("="*70)
-    print("\nREGLES DU JEU :")
-    print("-" * 70)
-    print("Vous devez accomplir des epreuves pour gagner des cles.")
-    print("Objectif : Collecter 3 cles pour acceder a la salle du tresor.")
-    print("\nTypes d'epreuves disponibles :")
-    print("  1. Epreuves de Mathematiques")
-    print("  2. Epreuves de Logique")
-    print("  3. Epreuves du Hasard")
-    print("  4. Enigme du Pere Fouras")
-    print("\nChaque epreuve reussie vous rapporte 1 cle.")
-    print("-" * 70 + "\n")
-
-
-def composer_equipe(): # erreur avec leader
-    equipe = []
-    
-    while True:
-        try:
-            nb_joueurs = int(input("Combien de joueurs dans l'equipe (1 a 3) ? "))
-            if 1 <= nb_joueurs <= 3:
-                break
-            else:
-                print("Erreur : L'equipe doit comporter entre 1 et 3 joueurs.")
-        except ValueError:
-            print("Erreur : Veuillez entrer un nombre valide.")
-
-    has_leader = False
-    for i in range(nb_joueurs):
-        print(f"--- Joueur {i + 1} ---")
-        nom = input("Nom du joueur : ").strip()
-        profession = input("Profession : ").strip()
-
-        if i == nb_joueurs - 1 and not has_leader:
-            print("Le dernier joueur doit etre le leader de l'equipe.")
-            input("Appuyez sur Entree pour continuer...")
-            est_leader = True
-            has_leader = True
-        
-        if not has_leader:
-            leader_reponse = input("Est-ce le leader de l'equipe ? (oui/non) : ").strip().lower()
-            if leader_reponse == "oui":
-                has_leader = True
-                est_leader = True
-            else:
-                est_leader = False
-        
-        joueur = {
-            'nom': nom,
-            'profession': profession,
-            'leader': est_leader,
-            'cles_gagnees': 0
-        }
-        equipe.append(joueur)
-        print()
-    
-    if not any(j['leader'] for j in equipe):
-        equipe[0]['leader'] = True
-        print(f"{equipe[0]['nom']} est designe(e) comme leader par defaut.\n")
-    
-    return equipe
-
+RACINE = Path(__file__).resolve().parent
 
 def afficher_equipe(equipe):
     print("\n" + "="*70)
@@ -85,44 +21,6 @@ def afficher_equipe(equipe):
     print("="*70 + "\n")
 
 
-def choisir_joueur(equipe):
-    print("\n--- Selection du joueur pour l'epreuve ---")
-    for i, joueur in enumerate(equipe, 1):
-        role = "Leader" if joueur['leader'] else "Membre"
-        print(f"{i}. {joueur['nom']} ({joueur['profession']}) - {role}")
-    
-    while True:
-        try:
-            choix = int(input("\nEntrez le numero du joueur : "))
-            if 1 <= choix <= len(equipe):
-                joueur_choisi = equipe[choix - 1]
-                print(f"\n{joueur_choisi['nom']} a ete selectionne(e) pour cette epreuve.\n")
-                return joueur_choisi
-            else:
-                print(f"Erreur : Choisissez un numero entre 1 et {len(equipe)}.")
-        except ValueError:
-            print("Erreur : Veuillez entrer un nombre valide.")
-
-
-def menu_epreuves():
-    print("\n" + "="*70)
-    print("MENU DES EPREUVES")
-    print("="*70)
-    print("1. Epreuve de Mathematiques")
-    print("2. Epreuve de Logique")
-    print("3. Epreuve du Hasard")
-    print("4. Enigme du Pere Fouras")
-    print("="*70)
-    
-    while True:
-        try:
-            choix = int(input("\nChoix : "))
-            if 1 <= choix <= 4:
-                return choix
-            else:
-                print("Erreur : Choisissez un numero entre 1 et 4.")
-        except ValueError:
-            print("Erreur : Veuillez entrer un nombre valide.")
 
 
 def epreuve_math():
@@ -235,7 +133,7 @@ def main():
 
 
 if __name__ == '__main__':
-    try : 
+    try : # j'ai is ca car j'ai aps envie d avoir des erreur a chaque fois que je fais ctrl+c pour arreter le programme
         main()
     except KeyboardInterrupt:
         print("\n\nL'aventure a ete interrompue par l'utilisateur.")
