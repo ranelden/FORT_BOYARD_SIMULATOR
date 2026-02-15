@@ -122,4 +122,4 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print("\n\nL'aventure a ete interrompue par l'utilisateur.")
         print("Merci d'avoir joue a Fort Boyard !")
->>>>>>> origin/main
+
