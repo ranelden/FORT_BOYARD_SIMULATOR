@@ -104,8 +104,7 @@ def enregistrer_historique(nom_epreuve, nom_joueur, resultat):
     
     fichier_h = dossier_output / "historique.txt"
     res_str = "SUCCES" if resultat else "ECHEC"
-    
-    # Ajout de la date et de l'heure pour un meilleur suivi
+
     maintenant = datetime.datetime.now()
     date_formatee = maintenant.strftime("%d/%m/%Y %H:%M:%S")
     
