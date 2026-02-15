@@ -110,7 +110,7 @@ Le jeu vous guidera ensuite à travers les étapes de création de l'équipe et 
 
 
 
-### Détails des modules et fonctions
+### Détails des modules et fonctions principales
 
 | Module | Fonction | Rôle |
 | --- | --- | --- |
