@@ -4,11 +4,7 @@ from fonctions_utiles import introduction, composer_equipe, choisir_joueur, menu
 from epreuve_finale import salle_de_tresor
 from enigme_pere_fouras import enigme_pere_fouras
 from epreuves_mathematiques import epreuve_math
-#from epreuves_logiques import epreuve_logique
 from epreuves_hasard import epreuve_hasard
-"""fait pas cyril dabernard"""
-
-RACINE = Path(__file__).resolve().parent
 
 def afficher_equipe(equipe):
     print("\n" + "="*70)
@@ -16,21 +12,18 @@ def afficher_equipe(equipe):
     print("="*70)
     for i, joueur in enumerate(equipe, 1):
         role = "Leader" if joueur['leader'] else "Membre"
-        print(f"{i}. {joueur['nom']} - {role}")
-        print(f"   Cles gagnees : {joueur['cles_gagnees']}")
+        print(str(i) + ". " + joueur['nom'] + " (" + joueur['profession'] + ") - " + role)
+        print("   Cles gagnees : " + str(joueur['cles_gagnees']))
     print("="*70 + "\n")
 
 def epreuve_logique():
     pass
 
-
-def salle_de_tresor():
-    pass
-
-
 def calculer_total_cles(equipe):
-    return sum(joueur['cles_gagnees'] for joueur in equipe)
-
+    total = 0
+    for joueur in equipe:
+        total += joueur['cles_gagnees']
+    return total
 
 def main():
     introduction()
@@ -48,14 +41,18 @@ def main():
     print("\n" + "="*70)
     print("DEBUT DES EPREUVES")
     print("="*70)
-    print(f"Objectif : Collecter {cles_requises} cles\n")
+    print("Objectif : Collecter " + str(cles_requises) + " cles\n")
     
     while calculer_total_cles(equipe) < cles_requises:
-        print(f"\nCles collectees par l'equipe : {calculer_total_cles(equipe)}/{cles_requises}")
-        print(f"Epreuves completees : {epreuves_completees}\n")
+        print("\nCles collectees par l'equipe : " + str(calculer_total_cles(equipe)) + "/" + str(cles_requises))
+        print("Epreuves completees : " + str(epreuves_completees) + "\n")
         
         joueur_actuel = choisir_joueur(equipe)
         choix_epreuve = menu_epreuves()
+        
+        if choix_epreuve == 0:
+            print("\nL'aventure s'arrete ici.")
+            break
         
         input("\nAppuyez sur Entree pour commencer l'epreuve...")
         
@@ -72,19 +69,18 @@ def main():
         
         if resultat:
             joueur_actuel['cles_gagnees'] += 1
-            print(f"\n{joueur_actuel['nom']} remporte une cle !")
+            print("\n" + joueur_actuel['nom'] + " remporte une cle !")
         else:
-            print(f"\n{joueur_actuel['nom']} n'a pas gagne de cle.")
+            print("\n" + joueur_actuel['nom'] + " n'a pas gagne de cle.")
         
         epreuves_completees += 1
-        
         afficher_equipe(equipe)
         
         if calculer_total_cles(equipe) >= cles_requises:
             print("\n" + "="*70)
             print("OBJECTIF ATTEINT !")
             print("="*70)
-            print(f"L'equipe a collecte {calculer_total_cles(equipe)} cles.")
+            print("L'equipe a collecte " + str(calculer_total_cles(equipe)) + " cles.")
             print("Vous pouvez maintenant acceder a la salle du tresor !")
             print("="*70 + "\n")
             break
@@ -111,18 +107,17 @@ def main():
     print("\n" + "="*70)
     print("RECAPITULATIF DE L'AVENTURE")
     print("="*70)
-    print(f"Epreuves completees : {epreuves_completees}")
-    print(f"Cles collectees : {calculer_total_cles(equipe)}/{cles_requises}")
+    print("Epreuves completees : " + str(epreuves_completees))
+    print("Cles collectees : " + str(calculer_total_cles(equipe)) + "/" + str(cles_requises))
     print("\nPerformances individuelles :")
     for joueur in equipe:
-        print(f"  - {joueur['nom']} : {joueur['cles_gagnees']} cle(s)")
+        print("  - " + joueur['nom'] + " : " + str(joueur['cles_gagnees']) + " cle(s)")
     print("="*70)
     print("\nMerci d'avoir joue a Fort Boyard !")
     print("="*70 + "\n")
 
-
 if __name__ == '__main__':
-    try : # j'ai is ca car j'ai aps envie d avoir des erreur a chaque fois que je fais ctrl+c pour arreter le programme
+    try:
         main()
     except KeyboardInterrupt:
         print("\n\nL'aventure a ete interrompue par l'utilisateur.")
