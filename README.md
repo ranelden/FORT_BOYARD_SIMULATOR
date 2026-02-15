@@ -21,22 +21,19 @@ Ce projet est une simulation interactive en Python du célèbre jeu télévisé 
 
 ### Fonctionnalités Principales
 
-* 
+
 **Constitution d'équipe** : Création d'une équipe de 1 à 3 joueurs avec noms, professions et rôles (leader/membre).
 
 
-* 
 **Gestion des épreuves** : Quatre types d'épreuves (Mathématiques, Hasard, Logique et Énigmes du Père Fouras).
 
 
-* **Collecte de clés** : Chaque épreuve réussie rapporte une clé ; 3 clés sont nécessaires pour l'épreuve finale.
+**Collecte de clés** : Chaque épreuve réussie rapporte une clé ; 3 clés sont nécessaires pour l'épreuve finale.
 
 
-* 
 **Épreuve finale** : Recherche d'un mot-code à l'aide d'indices stockés dans un fichier JSON.
 
 
-* 
 **Historique (Bonus)** : Enregistrement des performances des joueurs dans un fichier `historique.txt`.
 
 
@@ -44,7 +41,7 @@ Ce projet est une simulation interactive en Python du célèbre jeu télévisé 
 ### Technologies Utilisées
 
 * **Langage** : Python 3.
-* 
+
 **Formats de données** : JSON pour les énigmes et indices.
 
 
@@ -58,7 +55,7 @@ Ce projet est une simulation interactive en Python du célèbre jeu télévisé 
 
 1. **Cloner le dépôt** :
 ```bash
-git clone https://github.com/votre-compte/XICS403-nomGroupe.git
+git clone https://github.com/ranelden/FORT_BOYARD_SIMULATOR
 
 ```
 
@@ -110,31 +107,17 @@ Le jeu vous guidera ensuite à travers les étapes de création de l'équipe et 
 
 
 
-### Détails des modules et fonctions
+### Détails des modules et fonctions principales de chaque modules
 
 | Module | Fonction | Rôle |
 | --- | --- | --- |
 | `main.py` | `main()` | Orchestre le déroulement global du simulateur.
-
- |
 | `fonctions_utiles.py` | `composer_equipe()` | Gère la saisie des informations des joueurs.
-
- |
 | `epreuves_mathematiques.py` | `epreuve_math()` | Propose factorielles, équations, ou nombres premiers.
-
- |
 | `epreuves_hasard.py` | `epreuve_hasard()` | Gère le Bonneteau ou le Lancer de dés.
-
- |
 | `epreuves_logiques.py` | `epreuve_logique()` | Implémente des jeux de stratégie contre l'IA.
-
- |
 | `enigme_pere_fouras.py` | `enigme_pere_fouras()` | Pose une énigme textuelle avec 3 essais.
-
- |
 | `epreuve_finale.py` | `salle_de_tresor()` | Simule la recherche du mot-code final.
-
- |
 
 ### Gestion des Erreurs
 
