@@ -4,114 +4,93 @@ def introduction():
     print("====================================================")
     print("        BIENVENUE DANS LE FORT BOYARD SIMULATOR     ")
     print("====================================================")
-    print("Tu vas constituer une équipe de 1 à 3 joueurs.")
-    print("Chaque épreuve réussie te fera gagner une clé.")
-    print("Avec 3 clés, tu pourras tenter d'accéder à la salle du trésor !")
+    print("Tu vas constituer une equipe de 1 a 3 joueurs.")
+    print("Chaque epreuve reussie te fera gagner une cle.")
+    print("Avec 3 cles, tu pourras tenter d'acceder a la salle du tresor !")
     print()
 
 def composer_equipe():
-    """
-    Demande à l'utilisateur de créer une équipe de 1 à 3 joueurs.
-    Retourne une liste de dictionnaires :
-    [{'nom': 'Alice', 'cles': 0, 'leader': True}, ...]
-    """
     equipe = []
+    
+    nb_joueurs = ""
+    while nb_joueurs not in ["1", "2", "3"]:
+        nb_joueurs = input("Combien de joueurs dans l'equipe ? (1 a 3) : ").strip()
+        if nb_joueurs not in ["1", "2", "3"]:
+            print("Saisie invalide. Merci de choisir 1, 2 ou 3.")
 
-    # nombre de joueurs
-    while True:
-        try:
-            nb = int(input("Combien de joueurs dans l'équipe ? (1 à 3) : "))
-            if 1 <= nb <= 3:
-                break
-            else:
-                print("❌ Merci de saisir un nombre entre 1 et 3.")
-        except ValueError:
-            print("❌ Entrée invalide, merci de saisir un nombre.")
+    nb = int(nb_joueurs)
 
-    # saisie des noms
     for i in range(1, nb + 1):
-        nom = ""
-        while nom.strip() == "":
-            nom = input(f"Nom du joueur {i} : ").strip()
-            if nom == "":
-                print("❌ Le nom ne peut pas être vide.")
+        print("\n--- Joueur", i, "---")
+        
+        nom = input("Nom du joueur : ").strip()
+        while nom == "":
+            print("Le nom ne peut pas etre vide.")
+            nom = input("Nom du joueur : ").strip()
+            
+        profession = input("Profession du joueur : ").strip()
+        
+        role_input = ""
+        while role_input not in ["oui", "non"]:
+            role_input = input("Est-ce le leader de l'equipe ? (oui/non) : ").strip().lower()
+            if role_input not in ["oui", "non"]:
+                print("Repondez par 'oui' ou 'non'.")
+
         joueur = {
             "nom": nom,
-            "cles": 0,
-            "leader": False
+            "profession": profession,
+            "leader": (role_input == "oui"),
+            "cles_gagnees": 0
         }
         equipe.append(joueur)
 
-    # choix du leader
-    if nb == 1:
+    leader_trouve = False
+    for j in equipe:
+        if j["leader"]:
+            leader_trouve = True
+            
+    if not leader_trouve:
         equipe[0]["leader"] = True
-        print(f"{equipe[0]['nom']} est automatiquement le leader de l'équipe.")
-    else:
-        print("\nQui sera le leader de l'équipe ?")
-        for i, joueur in enumerate(equipe, start=1):
-            print(f"{i}. {joueur['nom']}")
-
-        while True:
-            try:
-                choix = int(input("Numéro du leader : "))
-                if 1 <= choix <= nb:
-                    equipe[choix - 1]["leader"] = True
-                    break
-                else:
-                    print(f"❌ Merci de saisir un nombre entre 1 et {nb}.")
-            except ValueError:
-                print("❌ Entrée invalide, merci de saisir un nombre.")
-
-        print(f"✅ {equipe[choix - 1]['nom']} est le leader de l'équipe !\n")
+        print("\nAucun leader choisi,", equipe[0]['nom'], "est designe leader par defaut.")
 
     return equipe
 
 def menu_epreuves():
-    """
-    Affiche le menu des types d'épreuves et renvoie le choix de l'utilisateur.
-    Retourne une chaîne : 'math', 'hasard', 'logique', 'pere_fouras' ou 'quitter'.
-    """
-    print("============== MENU DES EPREUVES ==============")
-    print("1 - Epreuves mathématiques")
+    print("\n============== MENU DES EPREUVES ==============")
+    print("1 - Epreuves mathematiques")
     print("2 - Epreuves de hasard")
     print("3 - Epreuves logiques")
-    print("4 - Enigmes du Père Fouras")
+    print("4 - Enigmes du Pere Fouras")
     print("0 - Quitter le jeu")
     print("===============================================")
 
-    while True:
+    choix = ""
+    while choix not in ["1", "2", "3", "4", "0"]:
         choix = input("Ton choix : ").strip()
-        if choix == "1":
-            return "math"
-        elif choix == "2":
-            return "hasard"
-        elif choix == "3":
-            return "logique"
-        elif choix == "4":
-            return "pere_fouras"
-        elif choix == "0":
-            return "quitter"
-        else:
-            print("❌ Choix invalide, merci de saisir 0, 1, 2, 3 ou 4.")
+        if choix not in ["1", "2", "3", "4", "0"]:
+            print("Choix invalide, merci de saisir 0, 1, 2, 3 ou 4.")
+            
+    return int(choix)
 
 def choisir_joueur(equipe):
-    """
-    Demande quel joueur participe à l'épreuve en cours.
-    Retourne le dictionnaire du joueur choisi.
-    """
-    print("\nQuel joueur va participer à cette épreuve ?")
+    print("\nQuel joueur va participer a cette epreuve ?")
     for i, joueur in enumerate(equipe, start=1):
-        info_leader = " (leader)" if joueur.get("leader") else ""
-        print(f"{i}. {joueur['nom']} - Clés : {joueur['cles']}{info_leader}")
+        role = "Leader" if joueur["leader"] else "Membre"
+        print(str(i) + ". " + joueur['nom'] + " (" + joueur['profession'] + ") - " + role)
 
-    while True:
-        try:
-            choix = int(input("Numéro du joueur : "))
-            if 1 <= choix <= len(equipe):
-                joueur_choisi = equipe[choix - 1]
-                print(f"👉 {joueur_choisi['nom']} entre dans l'épreuve !\n")
-                return joueur_choisi
+    selection = ""
+    valide = False
+    while not valide:
+        selection = input("Numero du joueur : ").strip()
+        if selection.isdigit():
+            index = int(selection)
+            if 1 <= index <= len(equipe):
+                valide = True
             else:
-                print(f"❌ Merci de saisir un nombre entre 1 et {len(equipe)}.")
-        except ValueError:
-            print("❌ Entrée invalide, merci de saisir un nombre.")
+                print("Numero hors limite (1 a " + str(len(equipe)) + ").")
+        else:
+            print("Veuillez entrer un nombre valide.")
+            
+    joueur_choisi = equipe[int(selection) - 1]
+    print("Le joueur selectionne est : " + joueur_choisi['nom'])
+    return joueur_choisi
