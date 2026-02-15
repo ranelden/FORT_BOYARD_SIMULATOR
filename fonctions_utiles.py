@@ -1,5 +1,6 @@
 import random
-
+from pathlib import Path
+import datetime
 
 def introduction():
     print("=======||||========================||||=====================")
@@ -10,10 +11,8 @@ def introduction():
     print("Avec 3 cles, tu pourras tenter d'acceder a la salle du tresor !")
     print()
 
-
 def composer_equipe():
     equipe = []
-
     nb_joueurs = ""
     while nb_joueurs not in ["1", "2", "3"]:
         nb_joueurs = input("Combien de joueurs dans l'equipe ? (1 a 3) : ").strip()
@@ -21,10 +20,10 @@ def composer_equipe():
             print("Saisie invalide. Merci de choisir 1, 2 ou 3.")
 
     nb = int(nb_joueurs)
+    a_deja_un_leader = False
 
     for i in range(1, nb + 1):
         print("\n--- Joueur", i, "---")
-
         nom = input("Nom du joueur : ").strip()
         while nom == "":
             print("Le nom ne peut pas etre vide.")
@@ -32,10 +31,14 @@ def composer_equipe():
 
         profession = input("Profession du joueur : ").strip()
 
-        role_input = ""
-        while role_input not in ["oui", "non"]:
-            role_input = input("Est-ce le leader de l'equipe ? (oui/non) : ").strip().lower()
-            if role_input not in ["oui", "non"]:
+        role_input = "non"
+        if not a_deja_un_leader:
+            while True:
+                role_input = input("Est-ce le leader de l'equipe ? (oui/non) : ").strip().lower()
+                if role_input in ["oui", "non"]:
+                    if role_input == "oui":
+                        a_deja_un_leader = True
+                    break
                 print("Repondez par 'oui' ou 'non'.")
 
         joueur = {
@@ -46,17 +49,11 @@ def composer_equipe():
         }
         equipe.append(joueur)
 
-    leader_trouve = False
-    for j in equipe:
-        if j["leader"]:
-            leader_trouve = True
-
-    if not leader_trouve:
+    if not a_deja_un_leader:
         equipe[0]["leader"] = True
         print("\nAucun leader choisi,", equipe[0]['nom'], "est designe leader par defaut.")
 
     return equipe
-
 
 def menu_epreuves():
     print("\n======||======== MENU DES EPREUVES ======||========")
@@ -74,7 +71,6 @@ def menu_epreuves():
             print("Choix invalide, merci de saisir 0, 1, 2, 3 ou 4.")
 
     return int(choix)
-
 
 def choisir_joueur(equipe):
     print("\nQuel joueur va participer a cette epreuve ?")
@@ -98,3 +94,24 @@ def choisir_joueur(equipe):
     joueur_choisi = equipe[int(selection) - 1]
     print("Le joueur selectionne est : " + joueur_choisi['nom'])
     return joueur_choisi
+
+def enregistrer_historique(nom_epreuve, nom_joueur, resultat):
+    racine = Path(__file__).resolve().parent
+    dossier_output = racine / "output"
+    
+    if not dossier_output.exists():
+        dossier_output.mkdir()
+    
+    fichier_h = dossier_output / "historique.txt"
+    res_str = "SUCCES" if resultat else "ECHEC"
+    
+    # Ajout de la date et de l'heure pour un meilleur suivi
+    maintenant = datetime.datetime.now()
+    date_formatee = maintenant.strftime("%d/%m/%Y %H:%M:%S")
+    
+    with open(fichier_h, "a", encoding="utf-8") as f:
+        ligne = "[" + date_formatee + "] "
+        ligne += "Joueur: " + nom_joueur.ljust(15) + " | "
+        ligne += "Epreuve: " + nom_epreuve.ljust(20) + " | "
+        ligne += "Resultat: " + res_str + "\n"
+        f.write(ligne)
