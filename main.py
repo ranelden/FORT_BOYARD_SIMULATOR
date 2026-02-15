@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-from fonctions_utiles import introduction, composer_equipe, menu_epreuves, choisir_joueur
-from epreuve_finale import salle_de_tresor
-
-=======
 import random
 from pathlib import Path
 from fonctions_utiles import introduction, composer_equipe, choisir_joueur, menu_epreuves
