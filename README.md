@@ -6,15 +6,6 @@ Voici une proposition de fichier `README.md` complet et bien formaté pour votre
 
 ## 1. Présentation Générale
 
-### Contributeurs
-
-* **Socning Saffo Loïc** : Développement des fonctions utilitaires, de l'épreuve finale et rédaction de la documentation.
-* **Cyril Dabernard** : [Répartition à compléter]
-* **Rayane Gareh** : [Répartition à compléter]
-* **Clement Vienot** : [Répartition à compléter]
-* **Axil Meddahi** : [Répartition à compléter]
-* **Youcef** : [Répartition à compléter]
-
 ### Description
 
 Ce projet est une simulation interactive en Python du célèbre jeu télévisé **Fort Boyard**. Il a été réalisé dans le cadre du module "Développement en Python" (XICS403). L'objectif est de constituer une équipe de joueurs, de réussir une série d'épreuves pour collecter des clés, et enfin d'accéder à la salle du trésor.
@@ -115,7 +106,7 @@ Le jeu vous guidera ensuite à travers les étapes de création de l'équipe et 
 | `fonctions_utiles.py` | `composer_equipe()` | Gère la saisie des informations des joueurs.
 | `epreuves_mathematiques.py` | `epreuve_math()` | Propose factorielles, équations, ou nombres premiers.
 | `epreuves_hasard.py` | `epreuve_hasard()` | Gère le Bonneteau ou le Lancer de dés.
-| `epreuves_logiques.py` | `epreuve_logique()` | Implémente des jeux de stratégie contre l'IA.
+| `epreuves_logiques.py` | `epreuve_logique()` | Implémente des jeux de stratégie.
 | `enigme_pere_fouras.py` | `enigme_pere_fouras()` | Pose une énigme textuelle avec 3 essais.
 | `epreuve_finale.py` | `salle_de_tresor()` | Simule la recherche du mot-code final.
 
@@ -130,12 +121,13 @@ Le programme traite les erreurs de saisie (entrées non numériques, choix hors 
 
 ### Répartition des Tâches
 
-Socning saffo Loic:
-Cyril DABERNARD:
-Rayane GAREH:
-Clement VIENOT:
-Axil MEDDAHI:
-Youcef:
+* Socning saffo Loic:
+* Cyril DABERNARD:
+* Rayane GAREH:
+* Clement VIENOT:
+* Axil MEDDAHI:
+* Youcef:
+
 ---
 
 ## 5. Tests et Validation
@@ -149,17 +141,25 @@ La gestion des erreurs de saisie a été testée pour empêcher tout plantage du
 * **Leader par défaut** : Si aucun leader n'est choisi manuellement, le système désigne automatiquement le premier joueur de la liste.
 * **Sélection de joueur** : Lors des épreuves, le système vérifie que l'index du joueur choisi existe bien dans l'équipe et refuse les entrées hors limites ou textuelles.
 
-### 5.2. Validation du Menu Principal (Module `main.py`)
+![alt text](image.png)
+
+### 5.2. Validation du Menu Principal (Module `fonctions_utiles.py`)
 Le menu de sélection des épreuves a été testé pour sa tolérance aux erreurs :
 * Les entrées invalides (choix inexistants comme "7" ou entrées de texte) déclenchent un message d'alerte et un retour au menu sans interrompre l'exécution.
+
+![alt text](<Screenshot 2026-02-15 194156.png>)
 
 ### 5.3. Tests de Logique des Épreuves (Module `epreuves_hasard.py`)
 L'épreuve du Bonneteau sert de référence pour la validation des mini-jeux :
 * **Contrôle du choix** : Seules les lettres A, B ou C sont acceptées. Toute autre saisie est bloquée par un message d'erreur.
 * **Gestion des tentatives** : Le décompte des essais restants est mis à jour après chaque erreur, et la solution est révélée en cas d'échec final.
 
+![alt text](<Screenshot 2026-02-15 194528.png>)
+
 ### 5.4. Tests Unitaires et Intégrité des Données
 Des tests automatisés assurent la fiabilité des calculs et du chargement des fichiers externes :
 * **Mathématiques** : Validation des fonctions `factorielle(n)`, `est_premier(n)` et `premier_plus_proche(n)` via des cas de tests prédéfinis.
 * **Accès JSON** : Vérification de la présence et de la structure des fichiers `enigmesPF.json` et `indicesSalle.json` avant le lancement des épreuves correspondantes.
 * **Historique** : Confirmation de la création automatique du dossier `output/` et de l'écriture correcte des résultats dans `historique.txt`.
+
+![alt text](image-1.png)
