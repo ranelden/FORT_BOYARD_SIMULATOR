@@ -1,75 +1,87 @@
 import json
 import random
-"""fait par Cyril Dabernard"""
+from pathlib import Path
 
-def charger_enigmes(fichier="data/enigmesPF.json"):
-
-#    Charge les enigmes depuis data
-    try:
-        with open(fichier, 'r', encoding='utf-8') as f:
-            enigmes = json.load(f)
-            return enigmes
-    except FileNotFoundError:
-        print(f"Erreur : Le fichier '{fichier}' est introuvable.")
-        return []
-    except json.JSONDecodeError:
-        print("Erreur : Format JSON invalide.")
+def charger_enigmes():
+    racine = Path(__file__).resolve().parent
+    chemin_fichier = racine / "data" / "enigmesPF.json"
+    
+    if not chemin_fichier.exists():
+        print(f"Erreur : Le fichier {chemin_fichier} est introuvable.")
         return []
 
+    with open(chemin_fichier, "r", encoding="utf-8") as f:
+        enigmes = json.load(f)
+        
+    if not isinstance(enigmes, list) or len(enigmes) == 0:
+        print("Erreur : Le fichier d'énigmes est vide ou mal formé.")
+        return []
+        
+    return enigmes
 
-def enigme_pere_fouras(fichier="data/enigmesPF.json"):
-
-
+def enigme_pere_fouras():
     print("\n" + "="*70)
-    print("LE PERE FOURAS VOUS ACCUEILLE DANS SA VIGIE")
+    print("LE PÈRE FOURAS VOUS ACCUEILLE DANS SA VIGIE")
     print("="*70)
-    print("Vous avez 3 tentatives pour trouver la reponse et gagner une cle.")
+    print("Vous avez 3 tentatives pour trouver la réponse et gagner une clé.")
     print("="*70 + "\n")
     
-    enigmes = charger_enigmes(fichier)
+    enigmes = charger_enigmes()
     
     if not enigmes:
-        print("Impossible de charger les enigmes.")
+        print("Erreur : Impossible de lancer l'épreuve (données absentes).")
         return False
     
     enigme_choisie = random.choice(enigmes)
-    question = enigme_choisie.get('question', '')
-    reponse_correcte = enigme_choisie.get('reponse', '')
+    question = enigme_choisie.get("question", "")
+    reponse_correcte = enigme_choisie.get("reponse", "")
     
-    if not question or not reponse_correcte:
-        print("Enigme incomplete.")
-        return None # verifie none pour gerer exeption
+    if question == "" or reponse_correcte == "":
+        print("Erreur : L'énigme sélectionnée est incomplète.")
+        return False
         
-    
-    print("Le Pere Fouras dit :")
+    print("Le Père Fouras dit :")
     print(question)
-    print(" faite attention aux accents et a la ponctuation !")
+    print("Faites attention aux accents et à la ponctuation !")
     
     nombre_tentatives = 3
     
     for tentative in range(1, nombre_tentatives + 1):
-        print(f"Tentative {tentative}/{nombre_tentatives}")
-        reponse_joueur = input("Votre reponse : ").strip()
+        print(f"\nTentative {tentative}/{nombre_tentatives}")
+        reponse_joueur = input("Votre réponse : ").strip()
         
         if reponse_joueur.lower() == reponse_correcte.lower():
             print("\n" + "="*70)
-            print("BRAVO ! Vous avez trouve la bonne reponse !")
-            print("Le Pere Fouras vous remet une cle.")
+            print("BRAVO ! Vous avez trouvé la bonne réponse !")
+            print("Le Père Fouras vous remet une clé.")
             print("="*70 + "\n")
             return True
         else:
             tentatives_restantes = nombre_tentatives - tentative
             if tentatives_restantes > 0:
-                print(f"Mauvaise reponse. Il vous reste {tentatives_restantes} tentative(s).\n")
+                print(f"Mauvaise réponse. Il vous reste {tentatives_restantes} tentative(s).")
     
     print("\n" + "="*70)
-    print("ECHEC ! Vous n'avez plus de tentatives.")
-    print(f"La bonne reponse etait : {reponse_correcte}")
+    print("ÉCHEC ! Vous n'avez plus de tentatives.")
+    print(f"La bonne réponse était : {reponse_correcte}")
     print("="*70 + "\n")
     return False
 
-
 if __name__ == "__main__":
-    print("\nTest du module enigme_pere_fouras\n")
+    print("--- DÉBUT DE LA BATTERIE DE TESTS (ÉNIGMES) ---")
+    
+    liste_test = charger_enigmes()
+    if liste_test:
+        print(f"Test 1 (Chargement) : OK ({len(liste_test)} énigmes trouvées)")
+        
+        test_e = liste_test[0]
+        if "question" in test_e and "reponse" in test_e:
+            print("Test 2 (Structure des données) : OK")
+        else:
+            print("Test 2 (Structure des données) : ERREUR")
+    else:
+        print("Test 1 (Chargement) : ERREUR")
+
+    print("\n--- TEST DU GAMEPLAY ---")
     resultat = enigme_pere_fouras()
-    print(f"\nResultat : {'Reussi' if resultat else 'Echoue'}")
+    print(f"Test terminé. Résultat renvoyé : {resultat}")
