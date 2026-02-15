@@ -119,17 +119,14 @@ def enregistrer_historique(nom_epreuve, nom_joueur, resultat):
 if __name__ == "__main__":
     print("--- DÉBUT DE LA BATTERIE DE TESTS (UTILITAIRES) ---")
 
-    # Test 1 : Composition d'équipe
     print("\nTest 1 : Création de l'équipe")
     ma_super_equipe = composer_equipe()
     print(f"Équipe créée avec {len(ma_super_equipe)} joueurs.")
 
-    # Test 2 : Sélection de joueur
     print("\nTest 2 : Sélection d'un joueur")
     joueur = choisir_joueur(ma_super_equipe)
     print(f"Vérification : {joueur['nom']} a été bien récupéré.")
 
-    # Test 3 : Enregistrement historique
     print("\nTest 3 : Écriture dans l'historique")
     enregistrer_historique("Test Technique", ma_super_equipe[0]['nom'], True)
     
@@ -140,5 +137,8 @@ if __name__ == "__main__":
         print(f"Succès : Le fichier {fichier_test} a été mis à jour.")
     else:
         print("Erreur : Le fichier d'historique n'a pas été créé.")
+
+    menu_epreuves()
+    print("\nTest 4 : Menu des épreuves affiché correctement.")
 
     print("\n--- FIN DES TESTS ---")
