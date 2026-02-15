@@ -156,7 +156,15 @@ L'épreuve du Bonneteau sert de référence pour la validation des mini-jeux :
 
 ![alt text](<Screenshot 2026-02-15 194528.png>)
 
-### 5.4. Tests Unitaires et Intégrité des Données
+### 5.4. Validation de la Logique de Jeu (Module `epreuves_logiques.py`)
+Le module logique, incluant le Morpion, a été rigoureusement testé pour garantir la robustesse des interactions :
+* **Validation du format** : Le programme rejette les saisies ne respectant pas le format ligne,colonne (ex: "4" ou "aqzd") avec un message d'erreur explicite.
+* **Contrôle des limites** : Toute coordonnée en dehors de la grille 3x3 (ex: "6,5") est immédiatement bloquée.
+* **Confirmation du coup** : Une fois qu'une position valide est saisie (ex: "1,2"), le tour passe automatiquement au maître du jeu.
+
+![alt text](<Screenshot 2026-02-15 222304.png>)
+
+### 5.5. Tests Unitaires et Intégrité des Données
 Des tests automatisés assurent la fiabilité des calculs et du chargement des fichiers externes :
 * **Mathématiques** : Validation des fonctions `factorielle(n)`, `est_premier(n)` et `premier_plus_proche(n)` via des cas de tests prédéfinis.
 * **Accès JSON** : Vérification de la présence et de la structure des fichiers `enigmesPF.json` et `indicesSalle.json` avant le lancement des épreuves correspondantes.

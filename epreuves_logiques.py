@@ -255,7 +255,6 @@ if __name__ == "__main__":
     affiche_batonnets(5)
     
     print("\n=== FIN DES TESTS ===")
-
     if input("\nLancer une épreuve aléatoire ? (o/n) : ").strip().lower() == 'o':
         resultat = epreuve_logique()
         texte_res = "Victoire du joueur" if resultat else "Défaite du joueur"
