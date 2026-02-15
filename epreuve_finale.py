@@ -70,3 +70,26 @@ def salle_de_tresor():
     print("="*50 + "\n")
     
     return resultat
+
+if __name__ == "__main__":
+    print("--- DÉBUT DE LA BATTERIE DE TESTS ---")
+
+    chemin = Path(__file__).resolve().parent / "data" / "indicesSalle.json"
+    print("Vérification du fichier JSON... ", end="")
+    if chemin.exists():
+        print("OK")
+    else:
+        print("ERREUR (Fichier absent)")
+
+    print("Vérification de l'accès aux données... ", end="")
+    try:
+        with open(chemin, "r", encoding="utf-8") as f:
+            d = json.load(f)
+            test_cle = d["Fort Boyard"]
+        print("OK")
+    except:
+        print("ERREUR (Problème de lecture ou de format)")
+
+    print("\n--- TEST DU GAMEPLAY ---")
+    succes = salle_de_tresor()
+    print("Partie terminée. Résultat renvoyé : " + str(succes))
