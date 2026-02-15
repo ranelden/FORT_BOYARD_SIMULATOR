@@ -1,8 +1,8 @@
 import random
 
 def bonneteau():
-    print("\n=== ÉPREUVE DU BONNETEAU ===")
-    print("La clé est cachée sous l'un des trois bonneteaux (A, B ou C).")
+    print("\n=== EPREUVE DU BONNETEAU ===")
+    print("La cle est cachee sous l'un des trois bonneteaux (A, B ou C).")
     print("Vous avez 2 essais pour la trouver !\n")
     
     bonneteaux = ['A', 'B', 'C']
@@ -10,53 +10,61 @@ def bonneteau():
     essais_restants = 2
     
     while essais_restants > 0:
-        print(f"Il vous reste {essais_restants} essai(s).")
-        choix = input("Sous quel bonneteau se cache la clé ? (A, B ou C) : ")
+        print("Il vous reste " + str(essais_restants) + " essai(s).")
         
+        choix = ""
         while choix not in bonneteaux:
-            print("Choix invalide ! Veuillez choisir A, B ou C.")
-            choix = input("Sous quel bonneteau se cache la clé ? (A, B ou C) : ")
+            saisie = input("Sous quel bonneteau se cache la cle ? (A, B ou C) : ").strip().upper()
+            
+            if len(saisie) != 1:
+                print("Erreur : Vous devez entrer une seule lettre (A, B ou C).")
+            elif saisie not in bonneteaux:
+                print("Erreur : Choix invalide ! Veuillez choisir A, B ou C.")
+            else:
+                choix = saisie
         
         if choix == bonneteau_avec_cle:
-            print("Félicitations ! Vous avez trouvé la clé !\n")
+            print("Felicitations ! Vous avez trouve la cle !\n")
             return True
         else:
             essais_restants -= 1
-            print(f"Dommage ! La clé n'était pas sous le bonneteau {choix}.\n")
+            print("Dommage ! La cle n'etait pas sous le bonneteau " + choix + ".\n")
     
-    print(f"Vous avez épuisé vos essais. La clé était sous le bonneteau {bonneteau_avec_cle}.\n")
+    print("Vous avez epuise vos essais. La cle était sous le bonneteau " + bonneteau_avec_cle + ".\n")
     return False
 
 def jeu_lance_des():
-    print("\n=== ÉPREUVE DU LANCER DE DÉS ===")
-    print("Vous et le maître du jeu lancez chacun deux dés.")
-    print("Le premier à obtenir un 6 remporte la partie !")
+    print("\n=== EPREUVE DU LANCER DE DES ===")
+    print("Vous et le maitre du jeu lancez chacun deux des.")
+    print("Le premier a obtenir un 6 remporte la partie !")
     print("Vous avez 3 essais maximum.\n")
     
     essais_max = 3
     
     for essai in range(1, essais_max + 1):
-        print(f"--- Essai {essai} ---")
-        input("Appuyez sur Entrée pour lancer vos dés...")
+        print("--- Essai " + str(essai) + " ---")
+        input("Appuyez sur Entree pour lancer vos des...")
 
-        des_joueur = (random.randint(1, 6), random.randint(1, 6))
-        print(f"Vos dés : {des_joueur[0]} et {des_joueur[1]}")
+        d1 = random.randint(1, 6)
+        d2 = random.randint(1, 6)
+        print("Vos des : " + str(d1) + " et " + str(d2))
         
-        if 6 in des_joueur:
-            print("\n🎉 Vous avez obtenu un 6 ! Vous gagnez !")
+        if d1 == 6 or d2 == 6:
+            print("\nVous avez obtenu un 6 ! Vous gagnez !")
             return True
 
-        print("Le maître du jeu lance ses dés...")
-        des_maitre = (random.randint(1, 6), random.randint(1, 6))
-        print(f"Dés du maître : {des_maitre[0]} et {des_maitre[1]}")
+        print("Le maitre du jeu lance ses des...")
+        m1 = random.randint(1, 6)
+        m2 = random.randint(1, 6)
+        print("Des du maitre : " + str(m1) + " et " + str(m2))
         
-        if 6 in des_maitre:
-            print("\n Le maître du jeu a obtenu un 6 ! Vous perdez.")
+        if m1 == 6 or m2 == 6:
+            print("\nLe maitre du jeu a obtenu un 6 ! Vous perdez.")
             return False
         
         print("Personne n'a obtenu de 6 cette fois.\n")
     
-    print("Match nul après 3 essais ! Vous perdez cette épreuve.\n")
+    print("Match nul apres 3 essais ! Vous perdez cette epreuve.\n")
     return False
 
 def epreuve_hasard():
@@ -65,8 +73,15 @@ def epreuve_hasard():
     return epreuve()
 
 if __name__ == "__main__":
-    resultat = epreuve_hasard()
-    if resultat:
-        print("Vous avez réussi l'épreuve !")
-    else:
-        print("Vous avez échoué l'épreuve !")
+    print("--- TEST DU MODULE HASARD ---")
+    print("1. Test de l'epreuve Bonneteau")
+    res1 = bonneteau()
+    print("Resultat Bonneteau : " + str(res1))
+    
+    print("\n2. Test de l'epreuve Lancer de des")
+    res2 = jeu_lance_des()
+    print("Resultat Des : " + str(res2))
+    
+    print("\n3. Test de la selection aleatoire (epreuve_hasard)")
+    res3 = epreuve_hasard()
+    print("Resultat selection aleatoire : " + str(res3))
